@@ -1,0 +1,606 @@
+/* =============================================================
+   TOKENS
+   ============================================================= */
+:root{
+  --vinho-fundo: #1a0d13;
+  --vinho-painel: #2b1420;
+  --vinho-linha: rgba(243,233,223,0.14);
+  --dourado: #c9a15a;
+  --dourado-claro: #e3c98a;
+  --rosa-poeira: #d98a92;
+  --creme: #f4ecdf;
+  --creme-fraco: rgba(244,236,223,0.62);
+  --sombra: rgba(0,0,0,0.45);
+
+  --fonte-display: "Cormorant Garamond", serif;
+  --fonte-corpo: "Jost", sans-serif;
+
+  --duracao-story: 6s; /* tempo de cada story antes de avançar sozinho */
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+  margin: 0;
+  background: #000;
+  font-family: var(--fonte-corpo);
+  color: var(--creme);
+  -webkit-font-smoothing: antialiased;
+}
+
+button{ font-family: inherit; }
+
+.eyebrow{
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--dourado-claro);
+  margin: 0 0 0.6rem;
+}
+
+/* =============================================================
+   PALCO — centraliza um "telefone" no desktop, tela cheia no mobile
+   ============================================================= */
+.stage{
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #3a1a26 0%, var(--vinho-fundo) 55%);
+  box-shadow: 0 30px 80px var(--sombra);
+}
+
+@media (min-width: 560px){
+  body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0508;
+  }
+  .stage{
+    height: min(92dvh, 900px);
+    border-radius: 26px;
+    border: 1px solid rgba(243,233,223,0.08);
+  }
+}
+
+.tela{
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+}
+.tela.ativa{ display: flex; }
+
+/* =============================================================
+   TELA NÚMEROS DA HISTÓRIA
+   ============================================================= */
+.tela-numeros{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.4rem;
+}
+.brilho-numeros{
+  background: radial-gradient(circle, rgba(217,138,146,0.14) 0%, transparent 70%);
+}
+.numeros-conteudo{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.numeros-lista{
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin: 1.6rem 0 2.4rem;
+}
+.numero-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.numero-valor{
+  font-family: var(--fonte-display);
+  font-size: clamp(2.6rem, 12vw, 3.4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--dourado-claro);
+  text-shadow: 0 0 24px rgba(201,161,90,0.3);
+}
+.numero-legenda{
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  color: var(--creme-fraco);
+  max-width: 26ch;
+}
+
+/* =============================================================
+   TELA CAPA
+   ============================================================= */
+.tela-capa{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.4rem;
+}
+
+.brilho{
+  position: absolute;
+  top: -30%; left: 50%;
+  width: 140%; height: 60%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(201,161,90,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.capa-conteudo{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.capa-titulo{
+  font-family: var(--fonte-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 9vw, 2.8rem);
+  margin: 0 0 2.2rem;
+  color: var(--creme);
+}
+
+
+
+.capa-contador{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.contador-numero{
+  font-family: var(--fonte-display);
+  font-size: clamp(3.6rem, 18vw, 5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--dourado-claro);
+  text-shadow: 0 0 30px rgba(201,161,90,0.35);
+}
+
+.contador-legenda{
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--creme-fraco);
+}
+
+.capa-data{
+  font-size: 0.85rem;
+  color: var(--creme-fraco);
+  margin: 0 0 2.6rem;
+}
+
+.btn-comecar{
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--creme);
+  color: #241019;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.btn-comecar:hover{ transform: scale(1.03); }
+.btn-comecar:active{ transform: scale(0.97); }
+
+.disco{
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #241019 0 3px, transparent 3.5px),
+    conic-gradient(#241019 0 0);
+  background-color: #241019;
+  position: relative;
+  flex: none;
+}
+.disco::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:50%;
+  background: radial-gradient(circle at center, transparent 0 34%, #241019 35% 40%, transparent 41%);
+}
+
+.capa-nota{
+  margin-top: 1.6rem;
+  font-size: 0.75rem;
+  color: rgba(244,236,223,0.4);
+}
+
+/* =============================================================
+   TELA STORIES
+   ============================================================= */
+.tela-stories{
+  background: radial-gradient(120% 90% at 50% 0%, var(--tom-fundo, #2b1420) 0%, #060306 68%);
+  transition: background-color 0.8s ease;
+}
+
+.barra-progresso{
+  display: flex;
+  gap: 5px;
+  padding: 14px 14px 0;
+  position: relative;
+  z-index: 5;
+}
+.barra-item{
+  flex: 1;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(243,233,223,0.25);
+  overflow: hidden;
+}
+.barra-preenchimento{
+  height: 100%;
+  width: 0%;
+  background: var(--creme);
+  border-radius: 3px;
+}
+.barra-item.concluida .barra-preenchimento{ width: 100%; }
+.barra-item.atual .barra-preenchimento{
+  animation: preencher var(--duracao-story) linear forwards;
+}
+.barra-item.pausada .barra-preenchimento{ animation-play-state: paused; }
+
+@keyframes preencher{
+  from{ width: 0%; }
+  to{ width: 100%; }
+}
+
+.stories-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.stories-info{ display: flex; flex-direction: column; }
+.stories-ano{
+  font-family: var(--fonte-display);
+  font-size: 1.3rem;
+  color: var(--creme);
+  line-height: 1.1;
+}
+.stories-sub{
+  font-size: 0.7rem;
+  color: var(--creme-fraco);
+  letter-spacing: 0.04em;
+}
+
+.btn-musica{
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(243,233,223,0.25);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.disco-mini{
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--creme);
+  position: relative;
+  animation: girar 3.5s linear infinite;
+  animation-play-state: paused;
+}
+.disco-mini::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:50%;
+  background: radial-gradient(circle at center, transparent 0 30%, var(--vinho-fundo) 31% 38%, transparent 39%);
+}
+.tocando .disco-mini{ animation-play-state: running; }
+
+@keyframes girar{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+.stories-corpo{
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stories-visual{
+  position: relative;
+  flex: 1;
+  margin: 12px 16px 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--vinho-painel);
+  min-height: 0;
+}
+.stories-foto{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%; /* prioriza a parte de cima (rostos) ao cortar */
+  display: block;
+}
+/* aparece quando a foto não existe/não carrega ainda */
+.stories-foto[data-vazio="true"]{
+  object-fit: contain;
+  padding: 20%;
+  opacity: 0.35;
+}
+/* tonalidade que muda gradualmente de ano pra ano — reforça a
+   sensação de passagem de tempo entre a primeira e a última foto */
+.stories-tom{
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  background-color: var(--tom-ano, transparent);
+  transition: background-color 0.8s ease;
+  pointer-events: none;
+}
+.stories-vinheta{
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 42%);
+  pointer-events: none;
+}
+
+.stories-texto{
+  padding: 14px 22px 22px;
+  position: relative;
+  z-index: 5;
+  flex: none;
+  max-height: 42%;
+  overflow-y: auto;
+}
+.stories-frase{
+  font-family: var(--fonte-display);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+  color: var(--creme);
+}
+.stories-motivo{
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--creme-fraco);
+  margin: 0;
+}
+
+/* cobre só a foto (agora o pai relativo), nunca o cabeçalho nem o texto
+   embaixo — assim funciona igual em qualquer tamanho de tela e o texto
+   longo continua rolável normalmente */
+.zona-toque{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.zona{ position: absolute; top: 0; bottom: 0; }
+.zona-esq{ left: 0; width: 32%; }
+.zona-dir{ right: 0; width: 68%; }
+
+/* =============================================================
+   TELA FINAL
+   ============================================================= */
+.tela-final{
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 2.4rem 2.4rem 2rem;
+  overflow-y: auto;
+}
+.brilho-final{
+  background: radial-gradient(circle, rgba(217,138,146,0.18) 0%, transparent 70%);
+}
+.final-conteudo{ position: relative; }
+
+.final-coracao{
+  display: block;
+  font-size: 2rem;
+  color: var(--rosa-poeira);
+  margin-bottom: 0.6rem;
+}
+
+/* botão invisível em volta do coração — segurar revela a mensagem P.S. */
+.final-coracao-btn{
+  background: none;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+.final-coracao-btn .final-coracao{
+  transition: transform 0.4s ease, color 0.4s ease;
+}
+.final-coracao-btn.segurando .final-coracao{
+  transform: scale(1.25);
+  color: var(--dourado-claro);
+}
+
+.final-dica{
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: rgba(244,236,223,0.32);
+  margin: 0 0 1.2rem;
+}
+
+.final-ps{
+  font-family: var(--fonte-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--dourado-claro);
+  max-width: 30ch;
+  margin: 0 auto;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease, margin 0.6s ease;
+}
+.final-ps.revelado{
+  max-height: 220px;
+  opacity: 1;
+  transform: translateY(0);
+  margin: 0 auto 1.6rem;
+}
+
+.final-reacao{
+  width: 100%;
+  max-width: 30ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.6rem 0 2rem;
+}
+.final-reacao-label{
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--creme-fraco);
+  margin: 0;
+}
+
+.final-reacao-emojis{
+  display: flex;
+  gap: 0.6rem;
+}
+.emoji-btn{
+  background: rgba(244,236,223,0.06);
+  border: 1px solid rgba(244,236,223,0.16);
+  border-radius: 999px;
+  width: 46px;
+  height: 46px;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.emoji-btn:hover{ transform: translateY(-2px); }
+.emoji-btn:active{ transform: scale(0.9); }
+.emoji-btn.selecionado{
+  background: rgba(201,161,90,0.16);
+  border-color: var(--dourado);
+  transform: scale(1.15);
+}
+
+.final-reacao-status{
+  font-size: 0.75rem;
+  color: var(--dourado-claro);
+  min-height: 1.1em;
+  margin: 0;
+}
+
+.btn-rever-fantasma{ opacity: 0.75; }
+
+.final-titulo{
+  font-family: var(--fonte-display);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 7vw, 2.2rem);
+  margin: 0 0 1.2rem;
+}
+
+.final-texto{
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--creme-fraco);
+  max-width: 34ch;
+  margin: 0 auto 1.4rem;
+}
+
+.final-assinatura{
+  font-family: var(--fonte-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--dourado-claro);
+  margin: 0 0 2.2rem;
+}
+
+.btn-rever{
+  background: transparent;
+  border: 1px solid var(--dourado);
+  color: var(--dourado-claro);
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn-rever:hover{ background: rgba(201,161,90,0.12); }
+
+/* =============================================================
+   RESPONSIVIDADE — telas pequenas / baixas
+   ============================================================= */
+@media (max-width: 360px){
+  .capa-titulo{ font-size: 1.9rem; }
+  .contador-numero{ font-size: 3rem; }
+  .numero-valor{ font-size: 2.3rem; }
+  .stories-frase{ font-size: 1.15rem; }
+  .stories-motivo{ font-size: 0.82rem; }
+}
+
+/* celulares com tela baixa (ex.: em modo paisagem, ou aparelhos compactos) */
+@media (max-height: 620px){
+  .tela-capa{ padding: 1.2rem; }
+  .capa-titulo{ margin-bottom: 1.2rem; }
+  .capa-contador{ margin-bottom: 0.4rem; }
+  .contador-numero{ font-size: 2.6rem; }
+  .capa-data{ margin-bottom: 1.2rem; }
+  .capa-nota{ margin-top: 0.8rem; }
+  .tela-numeros{ padding: 1.2rem; }
+  .numeros-lista{ gap: 0.9rem; margin: 1rem 0 1.4rem; }
+  .numero-valor{ font-size: 2.1rem; }
+  .stories-texto{ padding: 8px 20px 14px; max-height: 38%; }
+  .stories-frase{ font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .stories-motivo{ font-size: 0.78rem; }
+  .final-conteudo .final-coracao{ margin-bottom: 0.3rem; }
+  .final-titulo{ margin-bottom: 0.6rem; }
+  .final-texto{ margin-bottom: 0.8rem; }
+  .final-reacao{ margin: 0.4rem 0 1.2rem; }
+}
+
+/* garante que nada nunca ultrapasse a largura da tela, mesmo com fontes
+   grandes do sistema ou zoom de acessibilidade */
+.capa-conteudo, .final-conteudo{ max-width: 100%; }
+img{ max-width: 100%; }
+
+/* =============================================================
+   ACESSIBILIDADE
+   ============================================================= */
+@media (prefers-reduced-motion: reduce){
+  .barra-item.atual .barra-preenchimento{ animation: none; width: 100%; }
+  .disco-mini{ animation: none; }
+}
+
+button:focus-visible,
+.zona:focus-visible{
+  outline: 2px solid var(--dourado-claro);
+  outline-offset: 2px;
+}

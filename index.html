@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 anos — nossa retrospectiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- ======================================================= -->
+  <!-- TELA 0 — CAPA / PORTÃO DE ENTRADA                        -->
+  <!-- ======================================================= -->
+  <section id="tela-capa" class="tela tela-capa ativa">
+    <div class="brilho"></div>
+
+    <div class="capa-conteudo">
+      <p class="eyebrow">Uma Retrospectiva</p>
+      <h1 class="capa-titulo">
+        <!-- EDITE AQUI: nomes de vocês dois -->
+        Eduardo & Gabriela
+      </h1>
+
+      <div class="capa-contador">
+        <span id="contador-dias" class="contador-numero">0</span>
+        <span class="contador-legenda">dias juntos, e contando</span>
+      </div>
+
+      <p class="capa-data">desde 30 de outubro de 2016</p>
+
+      <button id="btn-comecar" class="btn-comecar">
+        <span class="disco"></span>
+        toque para começar
+      </button>
+
+      <p class="capa-nota">com som — capriche no volume 🎧</p>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TELA 1 — NOSSA HISTÓRIA EM NÚMEROS                       -->
+  <!-- ======================================================= -->
+  <section id="tela-numeros" class="tela tela-numeros">
+    <div class="brilho brilho-numeros"></div>
+
+    <div class="numeros-conteudo">
+      <p class="eyebrow">nossa história em números</p>
+
+      <div class="numeros-lista">
+        <div class="numero-item">
+          <span class="numero-valor" id="numero-dias">0</span>
+          <span class="numero-legenda">dias juntos</span>
+        </div>
+        <div class="numero-item">
+          <span class="numero-valor" id="numero-aniversarios">0</span>
+          <span class="numero-legenda">aniversários de namoro comemorados</span>
+        </div>
+        <div class="numero-item">
+          <span class="numero-valor" id="numero-capitulos">0</span>
+          <span class="numero-legenda">anos de história nessa retrospectiva</span>
+        </div>
+      </div>
+
+      <button id="btn-ver-historia" class="btn-comecar">
+        <span class="disco"></span>
+        ver nossa retrospectiva
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TELA 2 — VISUALIZADOR DE STORIES                         -->
+  <!-- ======================================================= -->
+  <section id="tela-stories" class="tela tela-stories">
+
+    <div class="barra-progresso" id="barra-progresso"><!-- barras via JS --></div>
+
+    <header class="stories-header">
+      <div class="stories-info">
+        <span class="stories-ano" id="stories-ano">2016</span>
+        <span class="stories-sub" id="stories-sub">nosso começo</span>
+      </div>
+      <button id="btn-musica" class="btn-musica" aria-label="pausar ou tocar música">
+        <span class="disco-mini"></span>
+      </button>
+    </header>
+
+    <div class="stories-corpo">
+      <div class="stories-visual">
+        <img id="stories-foto" class="stories-foto" src="" alt="">
+        <div class="stories-tom" id="stories-tom"></div>
+        <div class="stories-vinheta"></div>
+        <div class="zona-toque">
+          <div class="zona zona-esq" id="zona-esq"></div>
+          <div class="zona zona-dir" id="zona-dir"></div>
+        </div>
+      </div>
+
+      <div class="stories-texto">
+        <p class="stories-frase" id="stories-frase"></p>
+        <p class="stories-motivo" id="stories-motivo"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- TELA 3 — FINAL                                           -->
+  <!-- ======================================================= -->
+  <section id="tela-final" class="tela tela-final">
+    <div class="brilho brilho-final"></div>
+    <div class="final-conteudo">
+
+      <button type="button" id="btn-coracao" class="final-coracao-btn" aria-label="segure para revelar uma mensagem escondida">
+        <span class="final-coracao">♡</span>
+      </button>
+      <p class="final-dica">psiu... segure o coração</p>
+
+      <p class="eyebrow">10 anos depois</p>
+      <h2 class="final-titulo">e a nossa história continua</h2>
+
+      <!-- EDITE AQUI: sua mensagem final -->
+     <p class="final-texto">
+  Obrigada por ser o meu parceiro e por cada um desses dias — os simples
+  e os inesquecíveis, os bons e os não tão bons. Se depender de mim,
+  ano que vem a gente faz esse story de novo, só que com mais uma foto.
+</p>
+
+      <p class="final-assinatura">com amor, sua pepas</p>
+
+      <!-- mensagem secreta — revelada quando ele segura o coração acima -->
+      <p class="final-ps" id="final-ps">
+        <!-- EDITE AQUI: sua mensagem escondida (o "P.S." surpresa) -->
+        P.S. — se você achou isso, é porque teve paciência comigo até aqui.
+        Igual todo dia. Te amo.
+      </p>
+
+      <div class="final-reacao">
+        <p class="final-reacao-label">toque numa reação:</p>
+        <div class="final-reacao-emojis" id="final-reacao-emojis">
+          <button type="button" class="emoji-btn" data-emoji="❤️" aria-label="reagir com coração">❤️</button>
+          <button type="button" class="emoji-btn" data-emoji="🥹" aria-label="reagir emocionado">🥹</button>
+          <button type="button" class="emoji-btn" data-emoji="😍" aria-label="reagir apaixonado">😍</button>
+          <button type="button" class="emoji-btn" data-emoji="😭" aria-label="reagir chorando">😭</button>
+          <button type="button" class="emoji-btn" data-emoji="🔥" aria-label="reagir com fogo">🔥</button>
+        </div>
+        <p class="final-reacao-status" id="final-reacao-status" aria-live="polite"></p>
+      </div>
+
+      <button id="btn-rever" class="btn-rever btn-rever-fantasma">rever a retrospectiva</button>
+    </div>
+  </section>
+
+</div>
+
+<audio id="audio-trilha" src="musica/trilha.mp3" loop preload="none"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
