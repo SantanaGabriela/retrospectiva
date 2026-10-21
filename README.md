@@ -57,16 +57,18 @@ retrospectiva/
 - **Velocidade de cada story**: no `style.css`, a variável
   `--duracao-story` (no topo do arquivo, dentro de `:root`) controla quanto
   tempo cada story fica na tela antes de avançar sozinho. Está em `6s`.
-- **Navegação manual**: tocar/clicar na metade direita da tela avança,
-  na esquerda volta. Segurar pressionado pausa o avanço automático.
-  Nas setas do teclado (`←` `→`) também funciona.
-- **Cores**: todas as cores estão centralizadas no topo do `style.css`,
-  dentro de `:root` (`--vinho-fundo`, `--dourado`, `--rosa-poeira`, etc.),
-  então dá pra trocar a paleta inteira mexendo só ali.
-- **Progressão de tom por ano**: as fotos ganham uma tonalidade que vai
-  mudando gradualmente do início (roxo-azulado) até o fim (dourado), pra
-  reforçar a sensação de passagem de tempo. As duas cores-base ficam em
-  `TOM_INICIO` e `TOM_FIM`, no topo da seção 4 do `script.js`.
+- **Navegação manual**: tocar/clicar na metade direita da foto avança,
+  na esquerda volta. Também dá para tocar em uma barra de progresso para
+  pular direto para uma lembrança. Segurar a foto pausa o avanço automático.
+  No teclado, use as setas (`←` `→`) para navegar e a barra de espaço para
+  pausar/retomar.
+- **Stories interativos**: o coração no topo reage em cada lembrança. Ao
+  longo dos capítulos, há um ranking dos destinos mais visitados e stories
+  comemorativos de cada aniversário de namoro, de 1 a 10 anos. O quiz tem
+  três perguntas sobre a história do casal e espera uma resposta antes de
+  seguir para a próxima.
+- **Cores dos stories**: a paleta romântica fica em `PALETA_STORIES`, no
+  `script.js`. O destaque e o fundo alternam entre os capítulos.
 - **Mensagem secreta (P.S.)**: na tela final, segurar o coração por cerca
   de 1,4s revela uma mensagem escondida. Pra editar o texto, procure
   `final-ps` no `index.html`. Pra mudar o tempo necessário, é a constante
@@ -116,3 +118,18 @@ retrospectiva/
 5. Qualquer atualização futura (trocar uma frase, adicionar uma foto) é só
    repetir o upload ou fazer `git add . && git commit -m "ajuste" && git push`
    — o site atualiza sozinho em alguns minutos.
+
+
+## Stories interativos
+
+A segunda tela mostra dias, horas, aniversarios e a quantidade de capítulos
+de viagem calculada diretamente do roteiro. As fotos das viagens, a partir
+de 2020, estão agrupadas por ano: Barra de Jangada e Cabo de Santo Agostinho
+em 2020, Barra de Jangada em 2021 e 2022, João Pessoa, Gravatá e Porto de
+Galinhas em 2024, e João Pessoa em 2025. A duração dos stories continua
+definida por `--duracao-story` no `style.css`; nos capítulos de viagem,
+ela se ajusta para dar tempo de ver todas as fotos.
+O roteiro também mostra um ranking de destinos calculado a partir dos
+capítulos de viagem em `VIAGENS`, celebra os aniversários de 1 a 10 anos
+entre as histórias anuais e inclui um quiz de três perguntas sobre a data
+de namoro, o primeiro beijo e o pedido.

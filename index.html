@@ -26,10 +26,7 @@
         Eduardo & Gabriela
       </h1>
 
-      <div class="capa-contador">
-        <span id="contador-dias" class="contador-numero">0</span>
-        <span class="contador-legenda">dias juntos, e contando</span>
-      </div>
+      <div class="capa-mensagem"><span aria-hidden="true">✦</span><p>De todas as histórias que a vida podia escrever, a minha favorita é a nossa.</p></div>
 
       <p class="capa-data">desde 30 de outubro de 2016</p>
 
@@ -52,20 +49,12 @@
       <p class="eyebrow">nossa história em números</p>
 
       <div class="numeros-lista">
-        <div class="numero-item">
-          <span class="numero-valor" id="numero-dias">0</span>
-          <span class="numero-legenda">dias juntos</span>
-        </div>
-        <div class="numero-item">
-          <span class="numero-valor" id="numero-aniversarios">0</span>
-          <span class="numero-legenda">aniversários de namoro comemorados</span>
-        </div>
-        <div class="numero-item">
-          <span class="numero-valor" id="numero-capitulos">0</span>
-          <span class="numero-legenda">anos de história nessa retrospectiva</span>
-        </div>
+        <div class="numero-item"><span class="numero-valor" id="numero-dias">0</span><span class="numero-legenda">dias juntos, e contando</span></div>
+        <div class="numero-item"><span class="numero-valor" id="numero-horas">0</span><span class="numero-legenda">horas de hist&oacute;ria</span></div>
+        <div class="numero-item"><span class="numero-valor" id="numero-aniversarios">0</span><span class="numero-legenda">anivers&aacute;rios de namoro</span></div>
+        <div class="numero-item"><span class="numero-valor" id="numero-viagens">0</span><span class="numero-legenda">cap&iacute;tulos de viagem no roteiro</span></div>
+        <p class="numeros-frase">De 2016 at&eacute; aqui: uma vida de pequenos momentos e grandes aventuras.</p>
       </div>
-
       <button id="btn-ver-historia" class="btn-comecar">
         <span class="disco"></span>
         ver nossa retrospectiva
@@ -82,12 +71,16 @@
 
     <header class="stories-header">
       <div class="stories-info">
-        <span class="stories-ano" id="stories-ano">2016</span>
+        <span class="stories-contagem" id="stories-contagem" aria-live="polite"></span>
+        <span class="stories-ano" id="stories-ano" aria-live="polite">2016</span>
         <span class="stories-sub" id="stories-sub">nosso começo</span>
       </div>
-      <button id="btn-musica" class="btn-musica" aria-label="pausar ou tocar música">
-        <span class="disco-mini"></span>
-      </button>
+      <div class="stories-acoes">
+        <button type="button" id="btn-reagir-story" class="btn-reagir-story" aria-label="reagir com coração" aria-pressed="false">♡</button>
+        <button id="btn-musica" class="btn-musica" aria-label="pausar ou tocar música">
+          <span class="disco-mini"></span>
+        </button>
+      </div>
     </header>
 
     <div class="stories-corpo">
@@ -104,8 +97,10 @@
       <div class="stories-texto">
         <p class="stories-frase" id="stories-frase"></p>
         <p class="stories-motivo" id="stories-motivo"></p>
+        <div class="stories-interacao" id="stories-interacao" aria-live="polite"></div>
       </div>
     </div>
+
   </section>
 
   <!-- ======================================================= -->

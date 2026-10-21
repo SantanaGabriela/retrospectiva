@@ -84,29 +84,104 @@ const HISTORIA = [
 // EDITE AQUI: data em que vocês começaram a namorar (ano, mês-1, dia)
 const DATA_INICIO = new Date(2016, 9, 30); // 30/10/2016 — mês é 0-indexado (9 = outubro)
 
+const VIAGENS = [
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2020", subtitulo: "Barra de Jangada e Cabo de Santo Agostinho", destinos: ["Barra de Jangada", "Cabo de Santo Agostinho"], frase: "Uma escapada pertinho do mar que abriu caminho para tantas outras aventuras.", imagens: ["fotos/20201.jpeg", "fotos/20202.jpeg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2021", subtitulo: "Barra de Jangada", destinos: ["Barra de Jangada"], frase: "Voltamos para um lugar especial e fizemos mais lembranças para guardar.", imagens: ["fotos/20211.jpeg", "fotos/20212.jpeg", "fotos/20213.jpeg", "fotos/20214.jpeg", "fotos/2021 (2).jpg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2022", subtitulo: "Barra de Jangada", destinos: ["Barra de Jangada"], frase: "Mais um ano, mais um retorno a esse cantinho que já é tão nosso.", imagens: ["fotos/20221.jpeg", "fotos/20222.jpeg", "fotos/20223.jpeg", "fotos/2022.jpg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2024", subtitulo: "João Pessoa, Gravatá e Porto de Galinhas", destinos: ["João Pessoa", "Gravatá", "Porto de Galinhas"], frase: "Três destinos, tantos cenários diferentes e uma coleção de momentos nossos.", imagens: ["fotos/20241.jpeg", "fotos/20242.jpeg", "fotos/20243.jpeg", "fotos/20244.jpeg", "fotos/20245.jpeg", "fotos/20246.jpeg", "fotos/20247.jpeg", "fotos/20248.jpeg", "fotos/20249.jpeg", "fotos/2024.jpg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2025", subtitulo: "João Pessoa", destinos: ["João Pessoa"], frase: "Voltamos a um lugar que já faz parte das nossas lembranças.", imagens: ["fotos/20251.jpeg", "fotos/20252.jpeg", "fotos/20253.jpeg", "fotos/20254.jpeg", "fotos/20256.jpeg", "fotos/20257.jpeg", "fotos/2025.jpg"] }
+];
+
+const contagemDestinos = VIAGENS.flatMap(viagem => viagem.destinos)
+  .reduce((contagem, destino) => {
+    contagem.set(destino, (contagem.get(destino) || 0) + 1);
+    return contagem;
+  }, new Map());
+const DESTINOS_MAIS_VISITADOS = Array.from(contagemDestinos, ([nome, visitas]) => ({ nome, visitas }))
+  .sort((a, b) => b.visitas - a.visitas);
+
+const STORY_RANKING = {
+  tipo: "ranking",
+  ano: "NOSSO MAPA DO AMOR",
+  subtitulo: "lugares que já fazem parte da nossa história",
+  imagem: "fotos/2024.jpg",
+  frase: "Nossos lugares mais visitados",
+  motivo: "Tem lugar que vira cenário favorito quando a gente está junto.",
+  destinos: DESTINOS_MAIS_VISITADOS
+};
+
+const STORY_QUIZ = {
+  tipo: "quiz",
+  ano: "QUIZ DO CASAL",
+  subtitulo: "3 perguntas sobre a nossa história",
+  imagem: "fotos/2025.jpg",
+  perguntas: [
+    {
+      texto: "Qual é a data do nosso aniversário de namoro?",
+      opcoes: ["30/10/2016", "30/10/2015", "29/10/2016"],
+      resposta: "30/10/2016"
+    },
+    {
+      texto: "Quando demos o nosso primeiro beijo?",
+      opcoes: ["29/10/2014", "30/10/2015", "30/10/2016"],
+      resposta: "30/10/2015"
+    },
+    {
+      texto: "Onde foi feito o pedido de namoro?",
+      opcoes: ["Sítio da Trindade", "Cinema", "Na sua casa"],
+      resposta: "Cinema"
+    }
+  ]
+};
+
+const STORIES_ANIVERSARIO = Array.from({ length: 10 }, (_, indice) => {
+  const anos = indice + 1;
+  const ano = DATA_INICIO.getFullYear() + anos;
+  return {
+    tipo: "aniversario",
+    ano: `${anos} ${anos === 1 ? "ANO" : "ANOS"} DE NAMORO`,
+    subtitulo: `30 de outubro de ${ano}`,
+    imagem: `fotos/${ano}.jpg`,
+    frase: anos === 1 ? "Um ano escolhendo a gente." : `${anos} anos de nós. E ainda é só o começo.`,
+    motivo: "Cada 30 de outubro marca mais um capítulo da nossa história. ♥"
+  };
+});
+
+const ROTEIRO = [
+  HISTORIA[0],
+  STORIES_ANIVERSARIO[0],
+  HISTORIA[1],
+  STORIES_ANIVERSARIO[1],
+  HISTORIA[2],
+  STORIES_ANIVERSARIO[2],
+  HISTORIA[3],
+  STORIES_ANIVERSARIO[3],
+  HISTORIA[4],
+  VIAGENS[0],
+  STORIES_ANIVERSARIO[4],
+  HISTORIA[5],
+  VIAGENS[1],
+  STORIES_ANIVERSARIO[5],
+  HISTORIA[6],
+  VIAGENS[2],
+  STORIES_ANIVERSARIO[6],
+  HISTORIA[7],
+  STORIES_ANIVERSARIO[7],
+  HISTORIA[8],
+  VIAGENS[3],
+  STORIES_ANIVERSARIO[8],
+  HISTORIA[9],
+  VIAGENS[4],
+  STORIES_ANIVERSARIO[9],
+  STORY_RANKING,
+  STORY_QUIZ,
+  HISTORIA[10]
+];
+
+
 /* =============================================================
    2. CONTADOR DE DIAS NA TELA DE CAPA
 ============================================================= */
-function atualizarContadorDias(){
-  const agora = new Date();
-  const diffMs = agora - DATA_INICIO;
-  const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  document.getElementById("contador-dias").textContent = dias.toLocaleString("pt-BR");
-}
-atualizarContadorDias();
-
-// mantém o número certo enquanto a página fica aberta ao longo do dia
-setInterval(atualizarContadorDias, 60 * 1000);
-
-// recalcula na hora se a aba ficou em segundo plano (ou o computador
-// hibernou) e "virou o dia" enquanto ninguém olhava — assim o número
-// nunca aparece desatualizado quando a pessoa volta a olhar a tela
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible"){
-    atualizarContadorDias();
-  }
-});
-
 /* =============================================================
    3. NAVEGAÇÃO ENTRE TELAS
 ============================================================= */
@@ -157,12 +232,13 @@ function mostrarTelaNumeros(){
   const agora = new Date();
   const dias = Math.floor((agora - DATA_INICIO) / (1000 * 60 * 60 * 24));
   const aniversarios = calcularAniversariosCompletos(DATA_INICIO, agora);
+  const horas = Math.floor((agora - DATA_INICIO) / (1000 * 60 * 60));
+  const viagens = ROTEIRO.filter(item => item.tipo === "viagem").length;
 
   animarContagem("numero-dias", dias);
+  animarContagem("numero-horas", horas);
   animarContagem("numero-aniversarios", aniversarios);
-  // anos de história contados aqui = último ano − primeiro ano (2026 − 2016 = 10)
-  const anosDeHistoria = HISTORIA[HISTORIA.length - 1].ano - HISTORIA[0].ano;
-  animarContagem("numero-capitulos", anosDeHistoria);
+  animarContagem("numero-viagens", viagens);
 }
 
 document.getElementById("btn-ver-historia").addEventListener("click", () => {
@@ -178,40 +254,60 @@ const elSub = document.getElementById("stories-sub");
 const elFoto = document.getElementById("stories-foto");
 const elFrase = document.getElementById("stories-frase");
 const elMotivo = document.getElementById("stories-motivo");
+const elContagem = document.getElementById("stories-contagem");
+const elInteracao = document.getElementById("stories-interacao");
+const btnReagirStory = document.getElementById("btn-reagir-story");
 
 let indiceAtual = 0;
 let pausado = false;
+let quizRespondido = false;
+let perguntaQuizAtual = 0;
+let acertosQuiz = 0;
 let timeoutAvanco = null;
+let slideshowViagemTimer = null;
+let avancarFotoViagem = null;
 
-// cores de início e fim da progressão — de um tom frio/roxo (o começo,
-// 2016) até um dourado quente (o presente), pra reforçar visualmente
-// a passagem do tempo a cada story
-const TOM_INICIO = { r: 0x22, g: 0x14, b: 0x2c }; // roxo-azulado escuro
-const TOM_FIM = { r: 0x8a, g: 0x5a, b: 0x24 };    // dourado-âmbar
+const PALETA_STORIES = [
+  { destaque: "#ff9aae", fundo: "#451827" },
+  { destaque: "#f7b7c8", fundo: "#431d35" },
+  { destaque: "#e9a6d2", fundo: "#371b3a" },
+  { destaque: "#ffc0b9", fundo: "#4a202c" },
+  { destaque: "#d8b2f2", fundo: "#302040" },
+  { destaque: "#f4a9b8", fundo: "#4b1d35" }
+];
+const INTERVALO_FOTO_VIAGEM = 3200;
 
-function interpolarCor(corA, corB, t){
-  const r = Math.round(corA.r + (corB.r - corA.r) * t);
-  const g = Math.round(corA.g + (corB.g - corA.g) * t);
-  const b = Math.round(corA.b + (corB.b - corA.b) * t);
-  return `rgb(${r}, ${g}, ${b})`;
+function obterDuracaoStory(indice = indiceAtual){
+  const duracaoCss = getComputedStyle(document.documentElement)
+    .getPropertyValue("--duracao-story").trim();
+  const duracaoBase = duracaoCss.endsWith("ms")
+    ? parseFloat(duracaoCss)
+    : parseFloat(duracaoCss) * 1000;
+  const item = ROTEIRO[indice];
+
+  if (item.tipo === "ranking" || item.tipo === "quiz") {
+    return Math.max(duracaoBase, 12000);
+  }
+  if (item.tipo !== "viagem") return duracaoBase;
+  return Math.max(duracaoBase, item.imagens.length * INTERVALO_FOTO_VIAGEM);
 }
 
 function aplicarTomDoAno(indice){
-  const total = HISTORIA.length;
-  const t = total > 1 ? indice / (total - 1) : 0;
-  const cor = interpolarCor(TOM_INICIO, TOM_FIM, t);
-  document.getElementById("stories-tom").style.setProperty("--tom-ano", cor);
-  document.getElementById("stories-tom").style.backgroundColor = cor;
-  telaStories.style.setProperty("--tom-fundo", cor);
+  const paleta = PALETA_STORIES[indice % PALETA_STORIES.length];
+  telaStories.style.setProperty("--cor-destaque", paleta.destaque);
+  telaStories.style.setProperty("--cor-fundo-story", paleta.fundo);
 }
 
 // monta uma barra de progresso pra cada item da história
 function montarBarras(){
   barraProgresso.innerHTML = "";
-  HISTORIA.forEach(() => {
-    const item = document.createElement("div");
+  ROTEIRO.forEach((story, indice) => {
+    const item = document.createElement("button");
     item.className = "barra-item";
+    item.type = "button";
+    item.setAttribute("aria-label", `ir para lembrança ${indice + 1}: ${story.ano}`);
     item.innerHTML = '<div class="barra-preenchimento"></div>';
+    item.addEventListener("click", () => irParaStory(indice));
     barraProgresso.appendChild(item);
   });
 }
@@ -220,39 +316,180 @@ function pegarBarras(){
   return Array.from(barraProgresso.querySelectorAll(".barra-item"));
 }
 
-function renderizarStory(indice){
-  const item = HISTORIA[indice];
-  elAno.textContent = item.ano;
-  elSub.textContent = indice === 0
-    ? "nosso começo"
-    : `ano ${indice} de ${HISTORIA.length - 1}`;
-  elFrase.textContent = item.frase;
-  elMotivo.textContent = item.motivo;
+function renderizarInteracao(item){
+  elInteracao.replaceChildren();
+  if (item.tipo === "quiz") {
+    perguntaQuizAtual = 0;
+    acertosQuiz = 0;
+  }
+  if (item.tipo === "ranking") {
+    const lista = document.createElement("ol");
+    lista.className = "destinos-ranking";
+    item.destinos.forEach((destino, indice) => {
+      const linha = document.createElement("li");
+      const posicao = document.createElement("span");
+      posicao.className = "ranking-posicao";
+      posicao.textContent = String(indice + 1).padStart(2, "0");
+      const nome = document.createElement("span");
+      nome.className = "ranking-destino";
+      nome.textContent = destino.nome;
+      const visitas = document.createElement("span");
+      visitas.className = "ranking-visitas";
+      visitas.textContent = `${destino.visitas} ${destino.visitas === 1 ? "viagem" : "viagens"}`;
+      linha.append(posicao, nome, visitas);
+      lista.appendChild(linha);
+    });
+    elInteracao.appendChild(lista);
+    return;
+  }
 
+  if (item.tipo === "quiz") {
+    renderizarPerguntaQuiz(item);
+  }
+}
+
+function renderizarPerguntaQuiz(item){
+  const pergunta = item.perguntas[perguntaQuizAtual];
+  elSub.textContent = `pergunta ${perguntaQuizAtual + 1} de ${item.perguntas.length}`;
+  elFrase.textContent = pergunta.texto;
+  elMotivo.textContent = "Escolha uma alternativa para revelar a resposta.";
+  elInteracao.replaceChildren();
+
+  const opcoes = document.createElement("div");
+  opcoes.className = "quiz-opcoes";
+  pergunta.opcoes.forEach(opcao => {
+    const botao = document.createElement("button");
+    botao.type = "button";
+    botao.className = "quiz-opcao";
+    botao.textContent = opcao;
+    botao.addEventListener("click", () => {
+      opcoes.querySelectorAll(".quiz-opcao").forEach(opcaoBotao => {
+        opcaoBotao.disabled = true;
+        if (opcaoBotao.textContent === pergunta.resposta) {
+          opcaoBotao.classList.add("resposta-certa");
+        }
+      });
+      const acertou = opcao === pergunta.resposta;
+      if (acertou) acertosQuiz += 1;
+      botao.classList.add(acertou ? "selecionada-certa" : "selecionada-errada");
+      const resposta = document.createElement("p");
+      resposta.className = "quiz-resposta";
+      resposta.textContent = acertou
+        ? "Acertou! Essa lembrança continua viva. ♥"
+        : `A resposta era: ${pergunta.resposta}. ♥`;
+      const proxima = document.createElement("button");
+      proxima.type = "button";
+      proxima.className = "quiz-continuar";
+      proxima.textContent = perguntaQuizAtual + 1 < item.perguntas.length
+        ? "próxima pergunta →"
+        : "ver resultado ♥";
+      proxima.addEventListener("click", () => {
+        if (perguntaQuizAtual + 1 < item.perguntas.length) {
+          perguntaQuizAtual += 1;
+          renderizarPerguntaQuiz(item);
+          return;
+        }
+        renderizarResultadoQuiz(item);
+      });
+      elInteracao.append(resposta, proxima);
+    });
+    opcoes.appendChild(botao);
+  });
+  elInteracao.appendChild(opcoes);
+}
+
+function renderizarResultadoQuiz(item){
+  quizRespondido = true;
+  telaStories.classList.remove("quiz-aguardando");
+  const barraAtual = pegarBarras()[indiceAtual];
+  if (barraAtual) barraAtual.classList.remove("pausada");
+  elSub.textContent = "resultado do nosso quiz";
+  elFrase.textContent = "Quanto você lembra da nossa história?";
+  elMotivo.textContent = "";
+  elInteracao.replaceChildren();
+
+  const resultado = document.createElement("p");
+  resultado.className = "quiz-resultado";
+  resultado.textContent = `${acertosQuiz} de ${item.perguntas.length} respostas certas ♥`;
+  const continuar = document.createElement("button");
+  continuar.type = "button";
+  continuar.className = "quiz-continuar";
+  continuar.textContent = "continuar a retrospectiva →";
+  continuar.addEventListener("click", () => irParaStory(indiceAtual + 1));
+  elInteracao.append(resultado, continuar);
+}
+
+function renderizarStory(indice){
+  const item = ROTEIRO[indice];
+  quizRespondido = false;
+  perguntaQuizAtual = 0;
+  acertosQuiz = 0;
+  clearInterval(slideshowViagemTimer);
+  avancarFotoViagem = null;
+  elAno.textContent = item.ano;
+  elSub.textContent = item.subtitulo || (item.tipo === "viagem" ? "uma aventura nossa" : item.tipo === "texto" ? "tantas memorias para contar" : indice === 0 ? "nosso comeco" : `ano ${item.ano} da nossa historia`);
+  elFrase.textContent = item.frase;
+  elMotivo.textContent = item.motivo || "";
+  elContagem.textContent = `${String(indice + 1).padStart(2, "0")} / ${String(ROTEIRO.length).padStart(2, "0")}`;
+  renderizarInteracao(item);
+  btnReagirStory.classList.remove("reagido");
+  btnReagirStory.textContent = "♡";
+  btnReagirStory.setAttribute("aria-label", "reagir com coração");
+  btnReagirStory.setAttribute("aria-pressed", "false");
   aplicarTomDoAno(indice);
 
-  // tenta carregar a foto; se não existir ainda, mostra um estado vazio discreto
-  elFoto.dataset.vazio = "false";
-  elFoto.onerror = () => { elFoto.dataset.vazio = "true"; };
-  elFoto.src = item.imagem;
-  elFoto.alt = `Foto do ano ${item.ano}`;
+  const imagens = item.imagens || [item.imagem];
+  let fotoAtual = 0;
+  function mostrarFoto(){
+    const caminho = imagens[fotoAtual % imagens.length];
+    elFoto.dataset.vazio = "false";
+    elFoto.onerror = () => { elFoto.dataset.vazio = "true"; };
+    elFoto.src = caminho;
+    elFoto.alt = item.tipo === "viagem"
+      ? `Lembranca da viagem: ${item.subtitulo}`
+      : item.tipo === "aniversario"
+        ? `Foto para celebrar ${item.ano}`
+        : `Foto do ano ${item.ano}`;
+    elFoto.classList.remove("foto-entrando");
+    void elFoto.offsetWidth;
+    elFoto.classList.add("foto-entrando");
+    fotoAtual += 1;
+  }
+  mostrarFoto();
+  if (item.tipo === "viagem" && imagens.length > 1){
+    avancarFotoViagem = mostrarFoto;
+    slideshowViagemTimer = setInterval(avancarFotoViagem, INTERVALO_FOTO_VIAGEM);
+  }
+  telaStories.classList.toggle("story-viagem", item.tipo === "viagem");
+  telaStories.classList.toggle("story-texto", item.tipo === "texto");
+  telaStories.classList.toggle("story-ranking", item.tipo === "ranking");
+  telaStories.classList.toggle("story-quiz", item.tipo === "quiz");
+  telaStories.classList.toggle("story-aniversario", item.tipo === "aniversario");
+  telaStories.classList.toggle("quiz-aguardando", item.tipo === "quiz");
 
-  // atualiza estado visual das barras
   const barras = pegarBarras();
   barras.forEach((b, i) => {
     b.classList.remove("atual", "concluida", "pausada");
     if (i < indice) b.classList.add("concluida");
-    if (i === indice) b.classList.add("atual");
+    if (i === indice) {
+      b.style.setProperty("--duracao-story", `${obterDuracaoStory(indice)}ms`);
+      b.classList.add("atual");
+      b.setAttribute("aria-current", "step");
+    } else {
+      b.removeAttribute("aria-current");
+    }
   });
 }
 
 function irParaStory(indice){
+  if (ROTEIRO[indiceAtual].tipo === "quiz" && !quizRespondido && indice > indiceAtual) return;
   clearTimeout(timeoutAvanco);
+  pausado = false;
 
   if (indice < 0){
     indice = 0;
   }
-  if (indice >= HISTORIA.length){
+  if (indice >= ROTEIRO.length){
     finalizarStories();
     return;
   }
@@ -264,20 +501,16 @@ function irParaStory(indice){
 
 function agendarAvanco(){
   clearTimeout(timeoutAvanco);
-  // lê a duração definida no CSS (--duracao-story) pra manter as duas coisas em sincronia
-  const duracaoCss = getComputedStyle(document.documentElement)
-    .getPropertyValue("--duracao-story").trim();
-  const duracaoMs = duracaoCss.endsWith("ms")
-    ? parseFloat(duracaoCss)
-    : parseFloat(duracaoCss) * 1000;
-
-  timeoutAvanco = setTimeout(() => irParaStory(indiceAtual + 1), duracaoMs);
+  if (pausado) return;
+  if (ROTEIRO[indiceAtual].tipo === "quiz" && !quizRespondido) return;
+  timeoutAvanco = setTimeout(() => irParaStory(indiceAtual + 1), obterDuracaoStory());
 }
 
 function pausarStory(){
   if (pausado) return;
   pausado = true;
   clearTimeout(timeoutAvanco);
+  clearInterval(slideshowViagemTimer);
   const barras = pegarBarras();
   if (barras[indiceAtual]) barras[indiceAtual].classList.add("pausada");
 }
@@ -287,27 +520,32 @@ function retomarStory(){
   pausado = false;
   const barras = pegarBarras();
   const barraAtual = barras[indiceAtual];
-  if (!barraAtual) return;
+  if (ROTEIRO[indiceAtual].tipo === "quiz" && !quizRespondido) {
+    if (barraAtual) barraAtual.classList.remove("pausada");
+    return;
+  }
+  if (!barraAtual) {
+    agendarAvanco();
+    return;
+  }
 
   // recalcula quanto tempo falta com base no quanto a barra já preencheu
   const preenchimento = barraAtual.querySelector(".barra-preenchimento");
   const proporcaoFeita = preenchimento.getBoundingClientRect().width /
     barraAtual.getBoundingClientRect().width;
 
-  const duracaoCss = getComputedStyle(document.documentElement)
-    .getPropertyValue("--duracao-story").trim();
-  const duracaoMs = duracaoCss.endsWith("ms")
-    ? parseFloat(duracaoCss)
-    : parseFloat(duracaoCss) * 1000;
-
   barraAtual.classList.remove("pausada");
-  const tempoRestante = duracaoMs * (1 - proporcaoFeita);
+  const tempoRestante = obterDuracaoStory() * (1 - proporcaoFeita);
   timeoutAvanco = setTimeout(() => irParaStory(indiceAtual + 1), tempoRestante);
+  if (avancarFotoViagem) {
+    slideshowViagemTimer = setInterval(avancarFotoViagem, INTERVALO_FOTO_VIAGEM);
+  }
 }
 
 function iniciarStories(){
   montarBarras();
   indiceAtual = 0;
+  pausado = false;
   mostrarTela(telaStories);
   renderizarStory(0);
   agendarAvanco();
@@ -315,6 +553,7 @@ function iniciarStories(){
 
 function finalizarStories(){
   clearTimeout(timeoutAvanco);
+  clearInterval(slideshowViagemTimer);
   mostrarTela(telaFinal);
 }
 
@@ -324,6 +563,20 @@ const zonaDir = document.getElementById("zona-dir");
 
 zonaEsq.addEventListener("click", () => irParaStory(indiceAtual - 1));
 zonaDir.addEventListener("click", () => irParaStory(indiceAtual + 1));
+btnReagirStory.addEventListener("click", () => {
+  const reagido = btnReagirStory.classList.toggle("reagido");
+  btnReagirStory.textContent = reagido ? "♥" : "♡";
+  btnReagirStory.setAttribute("aria-label", reagido ? "remover reação de coração" : "reagir com coração");
+  btnReagirStory.setAttribute("aria-pressed", String(reagido));
+  if (!reagido) return;
+
+  const coracao = document.createElement("span");
+  coracao.className = "story-coracao-animado";
+  coracao.setAttribute("aria-hidden", "true");
+  coracao.textContent = "♥";
+  document.querySelector(".stories-visual").appendChild(coracao);
+  coracao.addEventListener("animationend", () => coracao.remove(), { once: true });
+});
 
 // segurar (mouse ou toque) pausa o story, como no Instagram
 [zonaEsq, zonaDir].forEach(zona => {
@@ -337,6 +590,10 @@ document.addEventListener("keydown", (e) => {
   if (!telaStories.classList.contains("ativa")) return;
   if (e.key === "ArrowRight") irParaStory(indiceAtual + 1);
   if (e.key === "ArrowLeft") irParaStory(indiceAtual - 1);
+  if (e.code === "Space" && !e.target.closest("button")) {
+    e.preventDefault();
+    pausado ? retomarStory() : pausarStory();
+  }
 });
 
 /* =============================================================
