@@ -9,8 +9,8 @@
    restante do site se adapta automaticamente à quantidade de itens.
 
    São 11 fotos (2016 a 2026): 2016 é o começo (o pedido, 30/10/2016)
-   e de 2017 a 2026 são os 10 anos de namoro. Por isso a contagem na
-   tela mostra "ano 1 de 10" até "ano 10 de 10" (= 2026).
+   e de 2017 a 2026 são os 10 anos de namoro. Os stories de aniversário
+   usam as fotos nomeadas por ano até o 9º aniversário; o 10º usa 2026.jpg.
 ============================================================= */
 const HISTORIA = [
   {
@@ -59,17 +59,17 @@ const HISTORIA = [
     ano: 2023,
     imagem: "fotos/2023.jpg",
     frase: "gênio forte, paciência maior ainda",
-    motivo: "Porque eu sei que não sou fácil — autoritária, sem paciência nenhuma — e mesmo assim você continua escolhendo ficar, com toda a calma que me falta."
+    motivo: "Porque eu sei que não sou fácil,autoritária e sem paciência nenhuma e mesmo assim você continua escolhendo ficar, com toda a calma que me falta."
   },
   {
     ano: 2024,
-    imagem: "fotos/2024.jpg",
+    imagem: "fotos/2024.jpeg",
     frase: "confortável como um lar",
     motivo: "Porque depois de tantos anos, você virou sinônimo de lar: o lugar onde eu posso ser exatamente do jeito que sou."
   },
   {
     ano: 2025,
-    imagem: "fotos/2025.jpg",
+    imagem: "fotos/2025.jpeg",
     frase: "e seguimos escrevendo",
     motivo: "Porque cada ano que passa só confirma que fizemos a escolha certa."
   },
@@ -86,10 +86,10 @@ const DATA_INICIO = new Date(2016, 9, 30); // 30/10/2016 — mês é 0-indexado 
 
 const VIAGENS = [
   { tipo: "viagem", ano: "NOSSA VIAGEM DE 2020", subtitulo: "Barra de Jangada e Cabo de Santo Agostinho", destinos: ["Barra de Jangada", "Cabo de Santo Agostinho"], frase: "Uma escapada pertinho do mar que abriu caminho para tantas outras aventuras.", imagens: ["fotos/20201.jpeg", "fotos/20202.jpeg"] },
-  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2021", subtitulo: "Barra de Jangada", destinos: ["Barra de Jangada"], frase: "Voltamos para um lugar especial e fizemos mais lembranças para guardar.", imagens: ["fotos/20211.jpeg", "fotos/20212.jpeg", "fotos/20213.jpeg", "fotos/20214.jpeg", "fotos/2021 (2).jpg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2021", subtitulo: "Barra de Jangada", destinos: ["Barra de Jangada"], frase: "Voltamos para um lugar especial e fizemos mais lembranças para guardar.", imagens: ["fotos/20211.jpeg", "fotos/20212.jpeg", "fotos/20213.jpeg", "fotos/20214.jpeg"] },
   { tipo: "viagem", ano: "NOSSA VIAGEM DE 2022", subtitulo: "Barra de Jangada", destinos: ["Barra de Jangada"], frase: "Mais um ano, mais um retorno a esse cantinho que já é tão nosso.", imagens: ["fotos/20221.jpeg", "fotos/20222.jpeg", "fotos/20223.jpeg", "fotos/2022.jpg"] },
-  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2024", subtitulo: "João Pessoa, Gravatá e Porto de Galinhas", destinos: ["João Pessoa", "Gravatá", "Porto de Galinhas"], frase: "Três destinos, tantos cenários diferentes e uma coleção de momentos nossos.", imagens: ["fotos/20241.jpeg", "fotos/20242.jpeg", "fotos/20243.jpeg", "fotos/20244.jpeg", "fotos/20245.jpeg", "fotos/20246.jpeg", "fotos/20247.jpeg", "fotos/20248.jpeg", "fotos/20249.jpeg", "fotos/2024.jpg"] },
-  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2025", subtitulo: "João Pessoa", destinos: ["João Pessoa"], frase: "Voltamos a um lugar que já faz parte das nossas lembranças.", imagens: ["fotos/20251.jpeg", "fotos/20252.jpeg", "fotos/20253.jpeg", "fotos/20254.jpeg", "fotos/20256.jpeg", "fotos/20257.jpeg", "fotos/2025.jpg"] }
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2024", subtitulo: "João Pessoa, Gravatá e Porto de Galinhas", destinos: ["João Pessoa", "Gravatá", "Porto de Galinhas"], frase: "Três destinos, tantos cenários diferentes e uma coleção de momentos nossos.", imagens: ["fotos/20241.jpeg", "fotos/20242.jpeg", "fotos/20243.jpeg", "fotos/20244.jpeg", "fotos/20245.jpeg", "fotos/20246.jpeg", "fotos/20247.jpeg", "fotos/20248.jpeg", "fotos/20249.jpeg"] },
+  { tipo: "viagem", ano: "NOSSA VIAGEM DE 2025", subtitulo: "João Pessoa", destinos: ["João Pessoa"], frase: "Voltamos a um lugar que já faz parte das nossas lembranças.", imagens: ["fotos/20251.jpeg", "fotos/20252.jpeg", "fotos/20253.jpeg", "fotos/20254.jpeg", "fotos/20256.jpeg", "fotos/20257.jpeg"] }
 ];
 
 const contagemDestinos = VIAGENS.flatMap(viagem => viagem.destinos)
@@ -104,7 +104,6 @@ const STORY_RANKING = {
   tipo: "ranking",
   ano: "NOSSO MAPA DO AMOR",
   subtitulo: "lugares que já fazem parte da nossa história",
-  imagem: "fotos/2024.jpg",
   frase: "Nossos lugares mais visitados",
   motivo: "Tem lugar que vira cenário favorito quando a gente está junto.",
   destinos: DESTINOS_MAIS_VISITADOS
@@ -114,7 +113,6 @@ const STORY_QUIZ = {
   tipo: "quiz",
   ano: "QUIZ DO CASAL",
   subtitulo: "3 perguntas sobre a nossa história",
-  imagem: "fotos/2025.jpg",
   perguntas: [
     {
       texto: "Qual é a data do nosso aniversário de namoro?",
@@ -141,9 +139,17 @@ const STORIES_ANIVERSARIO = Array.from({ length: 10 }, (_, indice) => {
     tipo: "aniversario",
     ano: `${anos} ${anos === 1 ? "ANO" : "ANOS"} DE NAMORO`,
     subtitulo: `30 de outubro de ${ano}`,
-    imagem: `fotos/${ano}.jpg`,
-    frase: anos === 1 ? "Um ano escolhendo a gente." : `${anos} anos de nós. E ainda é só o começo.`,
-    motivo: "Cada 30 de outubro marca mais um capítulo da nossa história. ♥"
+    imagem: anos <= 9 ? `fotos/${anos} ano ${ano}.jpeg` : `fotos/${ano}.jpg`,
+    frase: anos >= 3 && anos <= 9
+      ? `${anos} Anos de nós`
+      : anos === 10
+        ? "10 anos de nós e uma vida inteira para viver e construir juntos."
+      : anos === 1
+        ? "Um ano escolhendo a gente."
+        : `${anos} anos de nós. E ainda é só o começo.`,
+    motivo: (anos >= 3 && anos <= 9) || anos === 10
+      ? ""
+      : "Cada 30 de outubro marca mais um capítulo da nossa história. ♥"
   };
 });
 
@@ -172,10 +178,10 @@ const ROTEIRO = [
   STORIES_ANIVERSARIO[8],
   HISTORIA[9],
   VIAGENS[4],
+  HISTORIA[10],
   STORIES_ANIVERSARIO[9],
   STORY_RANKING,
-  STORY_QUIZ,
-  HISTORIA[10]
+  STORY_QUIZ
 ];
 
 
@@ -333,13 +339,34 @@ function renderizarInteracao(item){
       const nome = document.createElement("span");
       nome.className = "ranking-destino";
       nome.textContent = destino.nome;
+      const selecionar = document.createElement("button");
+      selecionar.type = "button";
+      selecionar.className = "ranking-escolher";
+      selecionar.setAttribute("aria-label", `marcar ${destino.nome} como lugar favorito`);
+      selecionar.setAttribute("aria-pressed", "false");
+      selecionar.textContent = "♡";
+      selecionar.addEventListener("click", () => {
+        lista.querySelectorAll(".ranking-escolher").forEach(botao => {
+          botao.classList.remove("escolhido");
+          botao.setAttribute("aria-pressed", "false");
+          botao.textContent = "♡";
+        });
+        selecionar.classList.add("escolhido");
+        selecionar.setAttribute("aria-pressed", "true");
+        selecionar.textContent = "♥";
+        destaque.textContent = `${destino.nome} também mora nas nossas lembranças. ♥`;
+      });
       const visitas = document.createElement("span");
       visitas.className = "ranking-visitas";
       visitas.textContent = `${destino.visitas} ${destino.visitas === 1 ? "viagem" : "viagens"}`;
-      linha.append(posicao, nome, visitas);
+      linha.append(posicao, nome, visitas, selecionar);
       lista.appendChild(linha);
     });
-    elInteracao.appendChild(lista);
+    const destaque = document.createElement("p");
+    destaque.className = "ranking-destaque";
+    destaque.setAttribute("aria-live", "polite");
+    destaque.textContent = "Toque no coração do lugar que mais marcou vocês.";
+    elInteracao.append(lista, destaque);
     return;
   }
 
@@ -414,7 +441,7 @@ function renderizarResultadoQuiz(item){
   const continuar = document.createElement("button");
   continuar.type = "button";
   continuar.className = "quiz-continuar";
-  continuar.textContent = "continuar a retrospectiva →";
+  continuar.textContent = "encerrar e guardar essa lembrança ♥";
   continuar.addEventListener("click", () => irParaStory(indiceAtual + 1));
   elInteracao.append(resultado, continuar);
 }
@@ -438,7 +465,7 @@ function renderizarStory(indice){
   btnReagirStory.setAttribute("aria-pressed", "false");
   aplicarTomDoAno(indice);
 
-  const imagens = item.imagens || [item.imagem];
+  const imagens = item.imagens || (item.imagem ? [item.imagem] : []);
   let fotoAtual = 0;
   function mostrarFoto(){
     const caminho = imagens[fotoAtual % imagens.length];
@@ -455,7 +482,13 @@ function renderizarStory(indice){
     elFoto.classList.add("foto-entrando");
     fotoAtual += 1;
   }
-  mostrarFoto();
+  if (imagens.length) {
+    mostrarFoto();
+  } else {
+    elFoto.removeAttribute("src");
+    elFoto.alt = "";
+    elFoto.dataset.vazio = "true";
+  }
   if (item.tipo === "viagem" && imagens.length > 1){
     avancarFotoViagem = mostrarFoto;
     slideshowViagemTimer = setInterval(avancarFotoViagem, INTERVALO_FOTO_VIAGEM);

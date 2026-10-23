@@ -12,20 +12,22 @@ retrospectiva/
 ├── script.js
 ├── fotos/
 │   ├── 2016.jpg   (o começo — o pedido, 30/10/2016)
-│   ├── 2017.jpg   (ano 1)
+│   ├── 1 ano 2017.jpeg   (aniversário de 1 ano)
 │   ├── ...
-│   └── 2026.jpg   (ano 10 — os 10 anos completos)
+│   ├── 9 ano 2025.jpeg   (aniversário de 9 anos)
+│   └── 2026.jpg   (aniversário de 10 anos)
 └── musica/
     └── trilha.mp3
 ```
 
 ## Passo a passo
 
-1. **Fotos**: já estão na pasta `fotos/`, uma por ano, de `2016.jpg` a
-   `2026.jpg` (11 fotos: 2016 é o começo e 2017–2026 são os 10 anos de
-   namoro — por isso a tela mostra "ano 1 de 10" até "ano 10 de 10").
-   Pra trocar uma foto, é só substituir o arquivo mantendo o mesmo nome.
-   Se o arquivo não existir, aquele story aparece sem foto — nada quebra.
+1. **Fotos**: as fotos anuais ficam na pasta `fotos/`, de `2016.jpg` a
+   `2026.jpg`. Os stories comemorativos de 1 a 9 anos usam as fotos
+   `1 ano 2017.jpeg` até `9 ano 2025.jpeg`; o aniversário de 10 anos usa
+   `2026.jpg`. 2016 é o começo e 2017–2026 são os 10 anos de namoro.
+   Para trocar uma foto de aniversário, substitua o arquivo mantendo o
+   mesmo nome. Se o arquivo não existir, aquele story aparece sem foto.
 
 2. **Adicione a música**: coloque um arquivo `.mp3` dentro de `musica/` com
    o nome `trilha.mp3`. Se preferir outro nome, atualize a linha
@@ -62,11 +64,12 @@ retrospectiva/
   pular direto para uma lembrança. Segurar a foto pausa o avanço automático.
   No teclado, use as setas (`←` `→`) para navegar e a barra de espaço para
   pausar/retomar.
-- **Stories interativos**: o coração no topo reage em cada lembrança. Ao
-  longo dos capítulos, há um ranking dos destinos mais visitados e stories
-  comemorativos de cada aniversário de namoro, de 1 a 10 anos. O quiz tem
-  três perguntas sobre a história do casal e espera uma resposta antes de
-  seguir para a próxima.
+- **Stories interativos**: o coração no topo reage em cada lembrança. Os
+  stories dos anos e aniversários concluem a retrospectiva antes dos dois
+  extras finais: o mapa dos destinos mais visitados, em que dá para escolher
+  um lugar favorito, e o quiz de três perguntas. O mapa e o quiz têm fundos
+  animados feitos em CSS, sem fotos; o quiz espera uma resposta antes de
+  seguir para a próxima pergunta.
 - **Cores dos stories**: a paleta romântica fica em `PALETA_STORIES`, no
   `script.js`. O destaque e o fundo alternam entre os capítulos.
 - **Mensagem secreta (P.S.)**: na tela final, segurar o coração por cerca
@@ -129,7 +132,7 @@ em 2020, Barra de Jangada em 2021 e 2022, João Pessoa, Gravatá e Porto de
 Galinhas em 2024, e João Pessoa em 2025. A duração dos stories continua
 definida por `--duracao-story` no `style.css`; nos capítulos de viagem,
 ela se ajusta para dar tempo de ver todas as fotos.
-O roteiro também mostra um ranking de destinos calculado a partir dos
-capítulos de viagem em `VIAGENS`, celebra os aniversários de 1 a 10 anos
-entre as histórias anuais e inclui um quiz de três perguntas sobre a data
-de namoro, o primeiro beijo e o pedido.
+O roteiro também celebra os aniversários de 1 a 10 anos entre as histórias
+anuais. Depois do último ano da retrospectiva, mostra um mapa dos destinos
+mais visitados calculado a partir de `VIAGENS` e um quiz de três perguntas
+sobre a data de namoro, o primeiro beijo e o pedido.
